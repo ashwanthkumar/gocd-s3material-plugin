@@ -1,7 +1,7 @@
-S3 Material Poller Plugin for Go-CD
-===================================
+# S3 Artifact Publish (Task Plugin)
 
-Plugin that allows S3 storage to be used as dependency materials in pipelines in Go-CD.
+Task Plugin that allows to push artifacts from pipeline to S3.
+
 TODO: More details
 
 ## Compiling

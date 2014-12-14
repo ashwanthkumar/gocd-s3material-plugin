@@ -1,7 +1,9 @@
 package material.store
 
-import org.apache.hadoop.fs.FileSystem
-import org.apache.hadoop.conf.Configuration
+import java.io.File
+
+import com.amazonaws.services.s3.AmazonS3Client
+import com.amazonaws.services.s3.model.GetObjectRequest
 
 
 sealed trait ArtifactStore {
@@ -11,9 +13,10 @@ sealed trait ArtifactStore {
   def deltaAfter(lastUpdated: Long): List[String]
 }
 
-case class S3ArtifactStore(conf: Configuration = new Configuration()) extends ArtifactStore with FileHelper {
-  override def get(from: String, to: String) = copyToLocal(from, to, conf)
-  override def put(from: String, to: String) = copyFromLocal(from, to, conf)
+case class S3ArtifactStore(client: AmazonS3Client, bucket: String) extends ArtifactStore {
+  override def get(from: String, to: String) { client.getObject(new GetObjectRequest(bucket, from), new File(to)) }
+  // TODO - Add support for pushing entire folders to S3
+  override def put(from: String, to: String) { client.putObject(bucket, to, new File(from)) }
   override def latest(materialName: String): String = ???
   override def deltaAfter(lastUpdated: Long): List[String] = ???
 }

@@ -12,14 +12,15 @@
         <scala.dep.version>2.10</scala.dep.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <go.version>14.3.0</go.version>
+        <hadoop.version>2.0.0-cdh4.3.0</hadoop.version>
     </properties>
-    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>com.thoughtworks.go</groupId>
             <artifactId>go-plugin-api</artifactId>
             <version>${go.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -32,11 +33,15 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-common</artifactId>
-            <version>2.0.0-cdh4.3.0</version>
+            <version>${hadoop.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>1.9.11</version>
         </dependency>
 
         <dependency>
@@ -121,19 +126,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <Go-Version>${go.version}</Go-Version>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
             </plugin>
 
         </plugins>
